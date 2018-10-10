@@ -1,12 +1,19 @@
 module.exports = {
-  type: 'react-component',
+  type: "react-component",
   npm: {
     esModules: true,
     umd: {
-      global: 'y',
+      global: "ReactSelectOperator",
       externals: {
-        react: 'React'
+        react: "React",
+        classnames: "classNames",
+        emotion: "emotion",
+        "styled-components": "StyledComponents",
+        "prop-types": "PropTypes",
+        "react-dom": "ReactDOM",
+        "react-input-autosize": "AutosizeInput",
+        "react-select": "ReactSelect"
       }
     }
   }
-}
+};

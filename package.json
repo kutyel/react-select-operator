@@ -1,6 +1,6 @@
 {
   "name": "react-select-operator",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "react-select-operator React component",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -19,11 +19,16 @@
     "test:coverage": "nwb test-react --coverage",
     "test:watch": "nwb test-react --server"
   },
-  "dependencies": {},
+  "dependencies": {
+    "react-select": "^2.1.0",
+    "styled-components": "^3.4.9"
+  },
   "peerDependencies": {
-    "react": "16.x"
+    "react": "^15.3.0 || ^16.0.0",
+    "react-dom": "^15.3.0 || ^16.0.0"
   },
   "devDependencies": {
+    "babel-preset-es2015": "^6.24.1",
     "nwb": "0.23.x",
     "react": "^16.5.2",
     "react-dom": "^16.5.2"
