@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import AsyncSelect, { components } from "react-select";
 
 import Booleans from "./Booleans";
-import { Group, GroupBadge, Option } from "./styles";
+import { Group, GroupBadge, Option, ValueWrapper as VWrapper } from "./styles";
 import { groupedOptions } from "./data";
 
 const { MultiValueContainer } = components;
@@ -51,12 +51,12 @@ export default class extends Component {
   };
 
   ValueWrapper = props => (
-    <div>
+    <VWrapper>
       {props.data.operator && (
         <Booleans onChange={e => this.onChangeBoolean(e)(props)} {...props} />
       )}
       <MultiValueContainer {...props} />
-    </div>
+    </VWrapper>
   );
 
   CustomOption = ({
