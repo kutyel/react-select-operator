@@ -7,9 +7,9 @@ import { niceOption } from "./data";
 
 const { MultiValueContainer } = components;
 
-const formatGroupLabel = ({ label, options }) => (
+const formatGroupLabel = ({ description, options, ...props }) => (
   <Group>
-    <span>{label}</span>
+    <span>{description}</span>
     <GroupBadge>{options.length}</GroupBadge>
   </Group>
 );
