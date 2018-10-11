@@ -2,9 +2,9 @@ import React from "react";
 import Select, { components } from "react-select";
 
 const operators = [
-  { value: "OR", label: "⚪ OR", type: "operator" },
-  { value: "AND", label: "🔵 AND", type: "operator" },
-  { value: "NOT", label: "🔴 NOT", type: "operator" }
+  { value: "OR", label: "⚪ OR" },
+  { value: "AND", label: "🔵 AND" },
+  { value: "NOT", label: "🔴 NOT" }
 ];
 
 const styles = {

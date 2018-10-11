@@ -3,7 +3,7 @@ import AsyncSelect, { components } from "react-select";
 
 import Booleans from "./Booleans";
 import { Group, GroupBadge, Option, ValueWrapper as VWrapper } from "./styles";
-import { groupedOptions } from "./data";
+import { niceOption } from "./data";
 
 const { MultiValueContainer } = components;
 
@@ -42,9 +42,7 @@ export default class extends Component {
     setValue([
       ...getValue(),
       {
-        value: value,
-        label: value,
-        type: "option",
+        num: value,
         operator: hasValue ? "or" : null
       }
     ]);
@@ -61,7 +59,7 @@ export default class extends Component {
 
   CustomOption = ({
     innerProps: { onClick, onMouseOver },
-    data: { info, value },
+    data: { info },
     ...props
   }) => (
     <Option onMouseOver={onMouseOver}>
@@ -73,7 +71,7 @@ export default class extends Component {
         type="checkbox"
       />
       <components.Option {...props}>
-        {value} - {info.join("; ")}
+        {props.value} - {info.join("; ")}
       </components.Option>
     </Option>
   );
@@ -89,10 +87,12 @@ export default class extends Component {
             Option: this.CustomOption
           }}
           formatGroupLabel={formatGroupLabel}
+          getOptionLabel={option => option.num}
+          getOptionValue={option => option.num}
           hideSelectedOptions={false}
           isMulti
           onChange={this.onChange}
-          options={groupedOptions}
+          options={niceOption}
           styles={styles}
           {...this.props}
         />
