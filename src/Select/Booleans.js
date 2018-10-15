@@ -14,9 +14,11 @@ const styles = {
     display: "flex",
     fontSize: "10px",
     height: "23px",
+    overflow: "visible",
     width: 100
   }),
-  singleValue: () => ({
+  singleValue: base => ({
+    ...base,
     alignItems: "center",
     display: "flex",
     height: "100%",
@@ -28,12 +30,6 @@ const styles = {
 const SingleValue = ({ data: { value }, ...props }) => (
   <components.SingleValue {...props}>{value}</components.SingleValue>
 );
-
-const CustomOption = ({
-  innerProps: { onClick, onMouseOver },
-  data: { info, value },
-  ...props
-}) => <components.Option {...props} />;
 
 const IndicatorSeparator = false;
 

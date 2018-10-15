@@ -3,7 +3,6 @@ import AsyncSelect, { components } from "react-select";
 
 import Booleans from "./Booleans";
 import { Group, GroupBadge, Option, ValueWrapper as VWrapper } from "./styles";
-import { niceOption } from "./data";
 
 const { MultiValueContainer } = components;
 
@@ -15,6 +14,10 @@ const formatGroupLabel = ({ description, options, ...props }) => (
 );
 
 const styles = {
+  valueContainer: base => ({
+    ...base,
+    overflow: "visible"
+  }),
   option: base => ({
     ...base,
     whiteSpace: "nowrap",
@@ -43,7 +46,8 @@ export default class extends Component {
       ...getValue(),
       {
         num: value,
-        operator: hasValue ? "or" : null
+        operator: hasValue ? "OR" : null,
+        value: value
       }
     ]);
   };
@@ -91,8 +95,6 @@ export default class extends Component {
           getOptionValue={option => option.num}
           hideSelectedOptions={false}
           isMulti
-          onChange={this.onChange}
-          options={niceOption}
           styles={styles}
           {...this.props}
         />
