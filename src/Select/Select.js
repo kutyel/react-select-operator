@@ -1,104 +1,103 @@
-import React, { Component } from "react";
-import AsyncSelect, { components } from "react-select";
+import React from 'react'
+import AsyncSelect, { components } from 'react-select'
 
-import Booleans from "./Booleans";
-import { Group, GroupBadge, Option, ValueWrapper as VWrapper } from "./styles";
+import Operators from './Operators'
+import {
+  Group,
+  GroupBadge,
+  Option as StyledOption,
+  ValueWrapper as StyledValue,
+} from './styles'
 
-const { MultiValueContainer } = components;
+const { MultiValueContainer: RSContainer, Option: RSOption } = components
 
-const formatGroupLabel = ({ description, options, ...props }) => (
+const formatGroupLabel = ({ description, options }) => (
   <Group>
     <span>{description}</span>
     <GroupBadge>{options.length}</GroupBadge>
   </Group>
-);
+)
 
 const styles = {
   valueContainer: base => ({
     ...base,
-    overflow: "visible"
+    overflow: 'visible',
   }),
   option: base => ({
     ...base,
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis"
-  })
-};
-
-export default class extends Component {
-  onChangeBoolean = bl => ({ data, selectProps }) =>
-    this.setValue(
-      selectProps.value.map(
-        opt =>
-          opt.value === data.value
-            ? {
-                ...data,
-                operator: bl.value
-              }
-            : opt
-      )
-    );
-
-  onClickOption = ({ value, hasValue, setValue, getValue }) => {
-    this.setValue = setValue;
-    setValue([
-      ...getValue(),
-      {
-        num: value,
-        operator: hasValue ? "OR" : null,
-        value: value
-      }
-    ]);
-  };
-
-  ValueWrapper = props => (
-    <VWrapper>
-      {props.data.operator && (
-        <Booleans onChange={e => this.onChangeBoolean(e)(props)} {...props} />
-      )}
-      <MultiValueContainer {...props} />
-    </VWrapper>
-  );
-
-  CustomOption = ({
-    innerProps: { onClick, onMouseOver },
-    data: { info },
-    ...props
-  }) => (
-    <Option onMouseOver={onMouseOver}>
-      <input
-        checked={props.isSelected}
-        onChange={() =>
-          props.isSelected ? onClick() : this.onClickOption(props)
-        }
-        type="checkbox"
-      />
-      <components.Option {...props}>
-        {props.value} - {info.join("; ")}
-      </components.Option>
-    </Option>
-  );
-
-  render() {
-    return (
-      <div>
-        <AsyncSelect
-          cacheOptions
-          closeMenuOnSelect={false}
-          components={{
-            MultiValueContainer: this.ValueWrapper,
-            Option: this.CustomOption
-          }}
-          formatGroupLabel={formatGroupLabel}
-          getOptionLabel={option => option.num}
-          getOptionValue={option => option.num}
-          hideSelectedOptions={false}
-          isMulti
-          styles={styles}
-          {...this.props}
-        />
-      </div>
-    );
-  }
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  }),
 }
+
+const onChangeBoolean = (
+  { data, selectProps: { value = [] }, setValue },
+  { value: operator }
+) =>
+  setValue(
+    value.map(
+      o =>
+        o.value === data.value
+          ? {
+              ...data,
+              operator,
+            }
+          : o
+    )
+  )
+
+const onClickOption = ({ value, hasValue, setValue, getValue }) =>
+  setValue([
+    ...getValue(),
+    {
+      num: value,
+      operator: hasValue && 'OR',
+      value,
+    },
+  ])
+
+const MultiValueContainer = props => (
+  <StyledValue>
+    {props.data.operator && (
+      <Operators onChange={e => onChangeBoolean(props, e)} {...props} />
+    )}
+    <RSContainer {...props} />
+  </StyledValue>
+)
+
+const Option = ({
+  innerProps: { onClick, onMouseOver },
+  data: { info = [] },
+  isSelected,
+  value,
+  ...props
+}) => (
+  <StyledOption onMouseOver={onMouseOver}>
+    <input
+      type="checkbox"
+      checked={isSelected}
+      onChange={() => (isSelected ? onClick() : onClickOption(props))}
+    />
+    <RSOption {...props}>
+      {value} - {info.join('; ')}
+    </RSOption>
+  </StyledOption>
+)
+
+const getNum = ({ num }) => num
+
+export default props => (
+  <AsyncSelect
+    isMulti
+    cacheOptions
+    closeMenuOnSelect={false}
+    hideSelectedOptions={false}
+    components={{ MultiValueContainer, Option }}
+    formatGroupLabel={formatGroupLabel}
+    getOptionLabel={getNum}
+    getOptionValue={getNum}
+    styles={styles}
+    {...props}
+  />
+)

@@ -1,10 +1,10 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Group = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
+`
 
 export const GroupBadge = styled.span`
   background-color: #ebecf0;
@@ -17,13 +17,13 @@ export const GroupBadge = styled.span`
   min-width: 1;
   padding: 0.167em 0.5em;
   text-align: center;
-`;
+`
 
 export const Option = styled.div`
   display: flex;
   align-items: center;
-`;
+`
 
 export const ValueWrapper = styled.div`
   display: flex;
-`;
+`
